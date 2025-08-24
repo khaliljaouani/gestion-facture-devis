@@ -5,15 +5,19 @@
   "type": "module",
   "main": "electron/main.js",
   "description": "Gestion facture/devis - Electron + React + Node/SQLite",
-  "author": "Toi",
+  "author": "khalil jaouani",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/khaliljaouani/gestion-facture-devis.git"
+  },
   "scripts": {
-   "dev": "concurrently -k -n FRONT,ELC -c cyan,green \"npm:dev:front\" \"npm:dev:electron\"",
- "dev:front": "cd frontend && npx vite --host",
+    "dev": "concurrently -k -n FRONT,ELC -c cyan,green \"npm:dev:front\" \"npm:dev:electron\"",
+    "dev:front": "cd frontend && npx vite --host",
     "dev:server": "node server/index.js",
     "dev:electron": "wait-on tcp:5173 && electron .",
     "build:front": "cd frontend && vite build",
-    "build": "npm run build:front && electron-builder -w --x64",
+    "dist": "npm run build:front && electron-builder -w --x64",
     "publish": "npm run build:front && electron-builder -w --x64 -p always",
     "postinstall": "electron-builder install-app-deps"
   },
@@ -32,28 +36,27 @@
     "wait-on": "^8.0.2"
   },
   "build": {
-  "appId": "com.gestion.pneu.roeun",
-  "productName": "Gestion Pneu Roeun",
-  "directories": {
-    "output": "dist_electron"
-  },
-  "files": [
-    "electron/**/*",
-    "frontend/dist/**/*",
-    "server/**/*",
-    "package.json"
-  ],
-  "win": {
-    "target": "nsis",
-    "icon": "build/icon.ico"
-  },
-  "publish": [
-    {
-      "provider": "github",
-      "owner": "khaliljaouani",
-      "repo": "gestion-facture-devis"
-    }
-  ]
-}
-
+    "appId": "com.gestion.pneu.roeun",
+    "productName": "Gestion Pneu Roeun",
+    "directories": {
+      "output": "dist_electron"
+    },
+    "files": [
+      "electron/**/*",
+      "frontend/dist/**/*",
+      "server/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "khaliljaouani",
+        "repo": "gestion-facture-devis"
+      }
+    ]
+  }
 }
