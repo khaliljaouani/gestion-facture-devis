@@ -1,16 +1,16 @@
-name: Build & Release
+name: Build Electron app
 
 on:
   push:
     tags:
-      - 'v*.*.*'   # exemple: v1.0.0
+      - "v*.*.*"
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -18,17 +18,20 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: Install dependencies (root)
         run: npm install
+
+      - name: Install dependencies (frontend)
+        run: |
+          cd frontend
+          npm install
 
       - name: Build Electron app
         run: npm run dist
 
       - name: Upload Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
-          files: |
-            dist/*.exe
-            dist/*.zip
+          files: dist_electron/**/*.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
