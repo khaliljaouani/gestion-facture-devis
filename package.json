@@ -1,0 +1,63 @@
+{
+  "name": "gestion-pneu-roeun",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "electron/main.js",
+  "description": "Gestion facture/devis - Electron + React + Node/SQLite",
+  "author": "khalil jaouani",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/khaliljaouani/gestion-facture-devis.git"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n FRONT,ELC -c cyan,green \"npm:dev:front\" \"npm:dev:electron\"",
+    "dev:front": "cd frontend && npx vite --host",
+    "dev:server": "node server/index.js",
+    "dev:electron": "wait-on tcp:5173 && electron .",
+    "build:front": "cd frontend && vite build",
+    "dist": "npm run build:front && electron-builder -w --x64",
+    "publish": "npm run build:front && electron-builder -w --x64 -p always",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^12.2.0",
+    "cors": "^2.8.5",
+    "electron-updater": "^6.3.9",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1",
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3",
+    "vite": "^7.1.3",
+    "wait-on": "^8.0.2"
+  },
+  "build": {
+    "appId": "com.gestion.pneu.roeun",
+    "productName": "Gestion Pneu Roeun",
+    "directories": {
+      "output": "dist_electron"
+    },
+    "files": [
+      "electron/**/*",
+      "frontend/dist/**/*",
+      "server/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "khaliljaouani",
+        "repo": "gestion-facture-devis"
+      }
+    ]
+  }
+}
